@@ -1,0 +1,30 @@
+CREATE TABLE quizzes (
+    id NUMBER PRIMARY KEY,
+    titulo VARCHAR2(255),
+    descricao VARCHAR2(1024)
+);
+
+CREATE SEQUENCE SEQ_QUIZZES START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE perguntas (
+    id NUMBER PRIMARY KEY,
+    texto VARCHAR2(1024),
+    resposta_correta NUMBER,
+    quiz_id NUMBER,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+CREATE SEQUENCE SEQ_PERGUNTAS START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE opcoes (
+    id NUMBER PRIMARY KEY,
+    texto VARCHAR2(255),
+    pergunta_id NUMBER,
+    FOREIGN KEY (pergunta_id) REFERENCES perguntas(id) ON DELETE CASCADE
+);
+
+CREATE SEQUENCE SEQ_OPCOES START WITH 1 INCREMENT BY 1;
+
+SELECT sequence_name 
+FROM user_sequences 
+WHERE sequence_name IN ('SEQ_PERGUNTAS', 'SEQ_OPCOES');
